@@ -98,7 +98,7 @@ class NodeList extends React.Component {
             // iterate over the nodes array and map them to "li" elements
             return (
               <tr key={index}>
-                <td><a href={node.path[0].value}>{node.title[0].value}</a></td>
+                <td><a href={node.path[0]}>{node.title[0].value}</a></td>
                 <td>{node.nid[0].value}</td>
                 <td><button onClick={e => deleteNode(node.nid[0].value)}>x</button></td>
               </tr>
@@ -130,7 +130,7 @@ const NodeForm = () => {
     };
     try {
       const axios = await ajax() // wait for an initialized axios object
-      const response = await axios.post('/node', node) // wait for the POST AJAX request to complete
+      const response = await axios.post('/node/', node) // wait for the POST AJAX request to complete
       console.log('Node created: ', response.data)
       emitter.emit('NODE_UPDATED')
     } catch (e) {
