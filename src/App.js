@@ -61,8 +61,10 @@ class NodeList extends React.Component {
     try {
       const axios = await ajax() // wait for an initialized axios object
       const response = await axios.get('/node/rest') // wait for the POST AJAX request to complete
+      console.log(response.data);
       if (response.data) {
         // setState will trigger repaint
+        console.log("---",response.data);
         this.setState({ nodes: response.data })
       }
       } catch (e) {
@@ -70,7 +72,7 @@ class NodeList extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const deleteNode = async (nid) => {
       try {
         const axios = await ajax() // wait for an initialized axios object
@@ -81,6 +83,7 @@ class NodeList extends React.Component {
         alert(e)
       }
     }
+     
     return (
       <table>
         <thead>
@@ -95,9 +98,9 @@ class NodeList extends React.Component {
             // iterate over the nodes array and map them to "li" elements
             return (
               <tr key={index}>
-                <td><a href={node.path} target="_blank">{node.title}</a></td>
-                <td>{node.nid}</td>
-                <td><button onClick={e => deleteNode(node.nid)}>x</button></td>
+                <td><a href={node.path[0].value}>{node.title[0].value}</a></td>
+                <td>{node.nid[0].value}</td>
+                <td><button onClick={e => deleteNode(node.nid[0].value)}>x</button></td>
               </tr>
             )
           })}
@@ -112,7 +115,7 @@ const NodeForm = () => {
   // note the 'async' keyword, it allows us to call 'await' later
   const handleSubmit = async (e) => {
     e.preventDefault()
-    var node = {
+    const node = {     
       type: [{
         target_id: 'article',
         target_type: 'node_type',
@@ -128,7 +131,7 @@ const NodeForm = () => {
     try {
       const axios = await ajax() // wait for an initialized axios object
       const response = await axios.post('/node', node) // wait for the POST AJAX request to complete
-      console.log('Node created: ', response)
+      console.log('Node created: ', response.data)
       emitter.emit('NODE_UPDATED')
     } catch (e) {
       alert(e)
