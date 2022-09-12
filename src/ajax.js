@@ -17,23 +17,24 @@ import config from './config'
 let singleton = null // a singleton instance of axios that the default init function returns
 
 // note the 'async' keyword, it allows us to call 'await' later
+// eslint-disable-next-line
 export default async () => {
-  if(!singleton) {
+  if (!singleton) {
     const tokenURL = config.drupal_url + '/session/token';
     try {
       const response = await axios.get(tokenURL, {
         withCredentials: true // required to send auth cookie
       })
       console.log(response);
-      const csrf_token = response.data
+      const csrfToken = response.data
       singleton = axios.create({
         baseURL: config.drupal_url, // every request is relative to this URL
         withCredentials: true, // include auth cookie in every request
-        headers: { 'X-CSRF-Token': csrf_token }, // include this header in every request
-        params: { _format: 'json' }, // add these query params to every request
-      })
+        headers: { 'X-CSRF-Token': csrfToken }, // include this header in every request
+        params: { _format: 'json' } // add these query params to every request
+      });
       console.log('Created new axios instance', singleton)
-    } catch(error) {
+    } catch (error) {
       console.error(error)
     }
   }

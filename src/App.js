@@ -1,7 +1,7 @@
-import './App.css';
 import React from 'react';
 import events from 'events'
 import ajax from './ajax'
+import './App.css';
 
 // Create an emitter object so that we can do pub/sub
 const emitter = new events.EventEmitter();
@@ -16,7 +16,7 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://github.com/kalwar/"
+          href="https://github.com/kalwar/reactjs_drupal"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -25,7 +25,7 @@ function App() {
       </header>
       <main>
         <div className="node-list">
-          <h3>Nodes published in local Drupal</h3>
+          <h3>Nodes with Title, ContentID and Operation in Drupal</h3>
           <NodeList />
         </div>
         <NodeForm />
@@ -44,11 +44,11 @@ class NodeList extends React.Component {
     this.refresh = this.refresh.bind(this)
   }
 
-  componentWillMount() {
+  componentWillMount () {
     emitter.addListener('NODE_UPDATED', this.refresh)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     emitter.addListener('NODE_UPDATED', this.refresh)
   }
 
@@ -56,7 +56,7 @@ class NodeList extends React.Component {
     await this.refresh()
   }
 
-  async refresh() {
+  async refresh () {
     // AJAX fetch server/node/rest?_format=json and setState with the response data
     try {
       const axios = await ajax() // wait for an initialized axios object
@@ -64,7 +64,7 @@ class NodeList extends React.Component {
       console.log(response.data);
       if (response.data) {
         // setState will trigger repaint
-        console.log("---",response.data);
+        console.log(response.data);
         this.setState({ nodes: response.data })
       }
       } catch (e) {
@@ -98,7 +98,7 @@ class NodeList extends React.Component {
             // iterate over the nodes array and map them to "li" elements
             return (
               <tr key={index}>
-                <td><a href={node.path[0]}>{node.title[0].value}</a></td>
+                <td><a href={node}>{node.title[0].value}</a></td>
                 <td>{node.nid[0].value}</td>
                 <td><button onClick={e => deleteNode(node.nid[0].value)}>x</button></td>
               </tr>
@@ -142,7 +142,7 @@ const NodeForm = () => {
   }
 
   return (
-    <div class="create-node-form">
+    <div className="create-node-form">
       <h4>Create Node Form</h4>
       <form onSubmit={handleSubmit}>
         <label>Title</label>
