@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src="https://cdn.pixabay.com/photo/2017/09/19/08/54/eyes-2764597_1280.jpg" alt="logo" />
+        <img src="https://cdn.pixabay.com/photo/2015/09/11/08/48/banner-935470_1280.jpg" alt="logo" />
         <p>
           React - Progressively Decoupled / Headless  
         </p>
