@@ -11,6 +11,7 @@ ReactJS-Drupal is a simple application which attempts to demonstrate headless dr
 ```shell
 git clone reactjs_drupal
 cd reactjs_drupal
+npm i --leagacy-peer-deps
 npm start
 ```
 
